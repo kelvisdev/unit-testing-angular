@@ -31,5 +31,13 @@ describe("HeroesComponent", () => {
 
       expect(component.heroes.length).toBe(2);
     });
+
+    it("should call deleteHero", () => {
+      mockHeroService.deleteHero.and.returnValue(of(true));
+      component.heroes = HEROES;
+      component.delete(HEROES[2]);
+
+      expect(mockHeroService.deleteHero).toHaveBeenCalledWith(HEROES[2]);
+    });
   });
 });
