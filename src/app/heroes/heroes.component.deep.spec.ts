@@ -6,7 +6,7 @@ import { HeroService } from "../hero.service";
 import { HeroComponent } from "../hero/hero.component";
 import { HeroesComponent } from "./heroes.component";
 
-fdescribe("HeroesComponent (deep tests)", () => {
+describe("HeroesComponent (deep tests)", () => {
   let fixture: ComponentFixture<HeroesComponent>;
   let mockHeroService;
   let HEROES;
