@@ -6,9 +6,8 @@ import {
 import { HeroService } from "./hero.service";
 import { MessageService } from "./message.service";
 
-fdescribe("HeroService", () => {
+describe("HeroService", () => {
   let mockMessageService;
-  let messageService: MessageService;
   let service: HeroService;
   let httpTestingController: HttpTestingController;
 
