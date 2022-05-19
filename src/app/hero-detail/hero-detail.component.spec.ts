@@ -1,4 +1,11 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import {
+  ComponentFixture,
+  fakeAsync,
+  flush,
+  TestBed,
+  tick,
+  waitForAsync,
+} from "@angular/core/testing";
 import { ActivatedRoute } from "@angular/router";
 import { HeroService } from "../hero.service";
 import { HeroDetailComponent } from "./hero-detail.component";
@@ -19,9 +26,7 @@ describe("HeroDetailComponent", () => {
     mockLocation = jasmine.createSpyObj(["back"]);
 
     TestBed.configureTestingModule({
-      imports: [
-        FormsModule
-      ],
+      imports: [FormsModule],
       declarations: [HeroDetailComponent],
       providers: [
         {
@@ -40,12 +45,41 @@ describe("HeroDetailComponent", () => {
     });
 
     fixture = TestBed.createComponent(HeroDetailComponent);
-    mockHeroService.getHero.and.returnValue(of({ id: 3, name: "SuperDude", strength: 100 }));
+    mockHeroService.getHero.and.returnValue(
+      of({ id: 3, name: "SuperDude", strength: 100 })
+    );
   });
 
-  it('should render hero name in a h2 tag', () => {
+  it("should render hero name in a h2 tag", () => {
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.querySelector('h2').textContent).toContain("SUPERDUDE");
+    expect(fixture.nativeElement.querySelector("h2").textContent).toContain(
+      "SUPERDUDE"
+    );
   });
+
+  it("should call updateHero when save is called", fakeAsync(() => {
+    mockHeroService.updateHero.and.returnValue(of({}));
+    fixture.detectChanges();
+
+    // run updateHero
+    fixture.componentInstance.save();
+    flush();
+    // tick(250);
+
+    expect(mockHeroService.updateHero).toHaveBeenCalled();
+  }));
+
+
+  // Test Simulation Promise
+  // it("should call updateHero when save is called", waitForAsync(() => {
+  //   mockHeroService.updateHero.and.returnValue(of({}));
+  //   fixture.detectChanges();
+
+  //   fixture.componentInstance.save();
+
+  //   fixture.whenStable().then(() => {
+  //     expect(mockHeroService.updateHero).toHaveBeenCalled();
+  //   });
+  // }));
 });
